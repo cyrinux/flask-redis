@@ -1,11 +1,13 @@
-from flask_redis import client as uut
+from unittest import mock
+
+from flask_redis import FlaskRedis
 
 
 def test_constructor_app(mocker):
-    """Test that the constructor passes the app to FlaskRedis.init_app"""
-    mocker.patch.object(uut.FlaskRedis, "init_app", autospec=True)
+    """Test that the constructor passes the app to FlaskRedis.init_app."""
+    mocker.patch.object(FlaskRedis, "init_app", autospec=True)
     app_stub = mocker.stub(name="app_stub")
 
-    uut.FlaskRedis(app_stub)
+    FlaskRedis(app_stub)
 
-    uut.FlaskRedis.init_app.assert_called_once_with(mocker.ANY, app_stub)
+    FlaskRedis.init_app.assert_called_once_with(mock.ANY, app_stub)
